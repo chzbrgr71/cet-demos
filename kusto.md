@@ -29,7 +29,7 @@ AzureDiagnostics
 AzureDiagnostics
 | where Category == "kube-audit"
 | project log_s
-| where parse_json(tostring(parse_json(log_s).sourceIPs))[0] == "71.237.25.70"
+| where parse_json(tostring(parse_json(log_s).sourceIPs))[0] == "192.168.1.1"
 
 # query for RBAC result (allow, deny, etc.)
 AzureDiagnostics
