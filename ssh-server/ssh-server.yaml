@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sshd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sshd
+  template:
+    metadata:
+      labels:
+        app: sshd
+    spec:
+      containers:
+        - image: chzbrgr71/eg_sshd
+          name: sshd
+          ports:
+          - containerPort: 22
+            protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sshd
+  labels:
+    name: sshd
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 22
+    targetPort: 22
+  selector:
+    app: sshd

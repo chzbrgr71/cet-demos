@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-dvwa
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web-dvwa
+  template:
+    metadata:
+      labels:
+        app: web-dvwa
+    spec:
+      containers:
+        - image: vulnerables/web-dvwa:1.9
+          name: web-dvwa
+          ports:
+          - containerPort: 80
+            protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-dvwa
+  labels:
+    name: web-dvwa
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  selector:
+    app: web-dvwa

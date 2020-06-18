@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx:1.17.9
+          name: nginx
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          securityContext:
+            privileged: true
+          volumeMounts:
+          - name: host-root-volume
+            mountPath: /host
+            readOnly: false              
+      volumes:
+      - name: host-root-volume
+        hostPath:
+          path: /                   
